@@ -18,3 +18,14 @@ stages:
     - featurize
     outs:
     - data/iris_featurized.csv
+  split_dataset:
+    cmd: python src/split_dataset.py --config=params.yaml
+    deps:
+    - data/iris_featurized.csv
+    - src/split_dataset.py
+    params:
+    - data_split
+    - featurize
+    outs:
+    - data/test.csv
+    - data/train.csv
