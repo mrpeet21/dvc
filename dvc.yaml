@@ -1,0 +1,20 @@
+stages:
+  data_load:
+    cmd: python src/data_load.py --config=params.yaml
+    deps:
+    - src/data_load.py
+    params:
+    - data_load
+    outs:
+    - data/classes.json
+    - data/iris.csv
+  feature_extraction:
+    cmd: python src/featurization.py --config=params.yaml
+    deps:
+    - data/iris.csv
+    - src/featurization.py
+    params:
+    - data_load
+    - featurize
+    outs:
+    - data/iris_featurized.csv

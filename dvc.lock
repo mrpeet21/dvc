@@ -1,0 +1,47 @@
+schema: '2.0'
+stages:
+  data_load:
+    cmd: python src/data_load.py --config=params.yaml
+    deps:
+    - path: src/data_load.py
+      hash: md5
+      md5: 2ca866a0ca5ba5c4734becc5a1ae669c
+      size: 1063
+    params:
+      params.yaml:
+        data_load:
+          raw_data_path: data/iris.csv
+          classes_names_path: data/classes.json
+    outs:
+    - path: data/classes.json
+      hash: md5
+      md5: d4b044a096165faab992c4d950ee1f15
+      size: 56
+    - path: data/iris.csv
+      hash: md5
+      md5: 10f5f61b137fa708403ea5c480386bfe
+      size: 2908
+  feature_extraction:
+    cmd: python src/featurization.py --config=params.yaml
+    deps:
+    - path: data/iris.csv
+      hash: md5
+      md5: 10f5f61b137fa708403ea5c480386bfe
+      size: 2908
+    - path: src/featurization.py
+      hash: md5
+      md5: af7b6d73d60d6c5756bf2d56c015967e
+      size: 846
+    params:
+      params.yaml:
+        data_load:
+          raw_data_path: data/iris.csv
+          classes_names_path: data/classes.json
+        featurize:
+          features_path: data/iris_featurized.csv
+          target_column: target
+    outs:
+    - path: data/iris_featurized.csv
+      hash: md5
+      md5: 10f5f61b137fa708403ea5c480386bfe
+      size: 2908
